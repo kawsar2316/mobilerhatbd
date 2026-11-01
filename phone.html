@@ -1,16 +1,30 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phone Details - Mobile BD</title><script src="https://cdn.tailwindcss.com"></script><style>body{background:#f1f5f9}</style></head><body>
-<header class="bg-white sticky top-0 z-40 border-b"><div class="max-w-3xl mx-auto px-3 py-2.5 flex justify-between items-center"><a href="/" class="text-xl font-extrabold text-blue-600">Mobile BD</a><a href="/" class="text-xs bg-gray-100 px-3 py-1 rounded-full">Home</a></div></header>
-<div id="wrap" class="max-w-3xl mx-auto px-2 py-3"><div class="bg-white rounded-2xl border p-3 text-center">Loading...</div></div>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phone Details</title><style>body{margin:0;font-family:Arial;background:#f2f4f8}.box{background:#fff;max-width:700px;margin:10px auto;padding:15px;border-radius:12px}img{width:100%;max-height:400px;object-fit:contain}table{width:100%;border-collapse:collapse;margin-top:10px}td{padding:10px;border:1px solid #eee}td:first-child{font-weight:bold;background:#f9f9f9;width:35%}</style></head><body><div class="box" id="main">Loading...</div>
 <script>
-const NPOINT="https://api.npoint.io/cd45816ccf83cda565d1";
-function getV(o,k){for(let x of k){if(o[x]!==undefined&&o[x]!==null&&String(o[x]).trim()!=='') return o[x];}return '';}
-function fixLink(l){if(!l) return '';l=l.trim();if(l.startsWith('http://')||l.startsWith('https://')) return l;return 'https://'+l;}
-async function load(){
- let id=new URLSearchParams(location.search).get('id');
- let r=await fetch(NPOINT); let phones=await r.json();
- let p=phones.find(x=>String(x.id)==String(id));
- if(!p){document.getElementById('wrap').innerHTML='Phone not found';return;}
- let name=getV(p,['name'])||'';let price=getV(p,['price','a_price'])||'';let img=getV(p,['image','img'])||'';let ram=getV(p,['ram'])||'-';let rom=getV(p,['rom'])||'-';let display=getV(p,['display'])||'-';let proc=getV(p,['processor','chipset','cpu'])||'-';let battery=getV(p,['battery'])||'-';let status=getV(p,['status'])||'';let camera=getV(p,['camera','cam'])||'-';let body=getV(p,['body'])||'-';let color=getV(p,['color'])||'-';let os=getV(p,['os','android'])||'-';let extra=getV(p,['full_text','extra'])||'-';let buy=fixLink(getV(p,['affiliate','link']));
- document.getElementById('wrap').innerHTML=`<div class="bg-white rounded-2xl border shadow-sm overflow-hidden"><div class="p-4 flex justify-center bg-gray-50"><img src="${img}" class="w-full max-w-[280px] h-[280px] object-contain"></div><div class="p-4"><h1 class="text-xl font-bold">${name}</h1><p class="text-blue-600 font-extrabold text-xl mt-1">TK ${price}</p><p class="text-gray-500 text-xs mt-1">${status} | ${getV(p,['brand'])||''}</p><div class="grid grid-cols-2 gap-2 mt-4"><div class="bg-gray-50 border rounded-xl p-3"><b>RAM:</b> ${ram}</div><div class="bg-gray-50 border rounded-xl p-3"><b>ROM:</b> ${rom}</div><div class="bg-gray-50 border rounded-xl p-3"><b>Display:</b> ${display}</div><div class="bg-gray-50 border rounded-xl p-3"><b>Processor:</b> ${proc}</div><div class="bg-gray-50 border rounded-xl p-3 col-span-2"><b>Camera:</b> ${camera}</div><div class="bg-gray-50 border rounded-xl p-3"><b>Battery:</b> ${battery}</div><div class="bg-gray-50 border rounded-xl p-3"><b>OS:</b> ${os}</div><div class="bg-gray-50 border rounded-xl p-3"><b>Body:</b> ${body}</div><div class="bg-gray-50 border rounded-xl p-3"><b>Color:</b> ${color}</div></div><div class="mt-4 border rounded-xl p-3"><b>Full Description:</b><p class="text-sm text-gray-600 mt-1 whitespace-pre-wrap">${extra}</p></div>${buy?`<a href="${buy}" target="_blank" class="block mt-4 bg-green-600 text-white text-center py-3 rounded-xl font-bold">Buy Now - Best Price</a>`:''}<a href="/" class="block mt-2 border text-center py-3 rounded-xl font-bold">← Back to All Mobiles</a></div></div>`;
-} load();
+const NPOINT='https://api.npoint.io/cd45816ccf83cda565d1';
+function getV(o,k){for(let x of k){if(o[x]!==undefined&&o[x]!==null&&String(o[x]).trim()!=='') return o[x];}return '-';}
+async function init(){let id=new URLSearchParams(location.search).get('id');if(!id){document.getElementById('main').innerHTML='No ID';return;}try{let r=await fetch(NPOINT);let d=await r.json();let p=d.find(x=>String(x.id)==String(id));if(!p){document.getElementById('main').innerHTML='Not Found';return;}
+document.title=p.name+' Price in Bangladesh';
+document.getElementById('main').innerHTML=`
+<img src="${getV(p,['image','img'])}"><h2>${p.name}</h2><h3 style="color:green">TK ${p.price}</h3>
+<table>
+<tr><td>Brand</td><td>${getV(p,['brand'])}</td></tr>
+<tr><td>Status</td><td>${getV(p,['status'])}</td></tr>
+<tr><td>Network</td><td>${getV(p,['network'])}</td></tr>
+<tr><td>Release Date</td><td>${getV(p,['release','release_date'])}</td></tr>
+<tr><td>RAM</td><td>${getV(p,['ram'])}</td></tr>
+<tr><td>ROM</td><td>${getV(p,['rom'])}</td></tr>
+<tr><td>Battery</td><td>${getV(p,['battery'])}</td></tr>
+<tr><td>Weight</td><td>${getV(p,['weight'])}</td></tr>
+<tr><td>Camera</td><td>${getV(p,['camera','cam'])}</td></tr>
+<tr><td>Display</td><td>${getV(p,['display'])}</td></tr>
+<tr><td>Processor</td><td>${getV(p,['processor'])}</td></tr>
+<tr><td>Body</td><td>${getV(p,['body'])}</td></tr>
+<tr><td>Color</td><td>${getV(p,['color'])}</td></tr>
+<tr><td>OS</td><td>${getV(p,['os'])}</td></tr>
+</table>
+<div style="margin-top:15px"><b>Full Description:</b><p>${getV(p,['full_text','extra'])}</p></div>
+${p.affiliate?`<a href="${p.affiliate}" target="_blank" style="display:block;background:#0a84ff;color:#fff;text-align:center;padding:12px;border-radius:8px;margin-top:15px;text-decoration:none">Buy Now</a>`:''}
+`;
+}catch(e){document.getElementById('main').innerHTML='Error';}}
+init();
 </script></body></html>
