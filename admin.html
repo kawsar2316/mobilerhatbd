@@ -1,5 +1,5 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Admin - Mobile BD</title><style>body{margin:0;font-family:Arial;background:#f2f4f8;padding:10px}.box{background:#fff;padding:15px;border-radius:12px;margin:10px auto;max-width:650px;box-shadow:0 4px 20px #0001}input,select,textarea{width:95%;padding:10px;border:1px solid #ddd;border-radius:8px;margin:4px 0}button{padding:12px 20px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}</style></head><body>
-<div class="box" id="loginBox"><h2>Admin Login - Mobile BD</h2><div style="position:relative"><input id="pass" type="password" placeholder="Password" style="border:2px solid #0a84ff;font-size:18px;text-align:center;width:85%"><span onclick="togglePass()" style="position:absolute;right:10px;top:12px;cursor:pointer">👁️</span></div><br><br><button onclick="login()" style="background:#0a84ff;color:#fff;width:100%;font-size:18px">LOGIN</button><p id="err" style="color:red;text-align:center"></p><center><a href="./">← Back to Home</a></center></div>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Admin - Mobile BD</title><style>body{margin:0;font-family:Arial;background:#f2f4f8;padding:10px}.box{background:#fff;padding:15px;border-radius:12px;margin:10px auto;max-width:650px}input,select,textarea{width:95%;padding:10px;border:1px solid #ddd;border-radius:8px;margin:4px 0}button{padding:12px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}</style></head><body>
+<div class="box" id="loginBox"><h2>Admin Login</h2><input id="pass" type="password" placeholder="Password" style="border:2px solid #0a84ff;text-align:center"><br><br><button onclick="login()" style="background:#0a84ff;color:#fff;width:100%">LOGIN</button><p id="err" style="color:red"></p></div>
 <div class="box" id="panel" style="display:none"><h2>✅ Admin Panel</h2>
 Name*: <input id="a_name"><br>
 Image URL*: <input id="a_image"><br>
@@ -10,42 +10,25 @@ Status: <select id="a_status"><option>Available</option><option>Upcoming</option
 RAM: <input id="a_ram"><br>
 ROM: <input id="a_rom"><br>
 Battery: <input id="a_battery"><br>
-Camera*: <input id="a_camera" placeholder="Ex: 50MP + 2MP"><br>
+Camera*: <input id="a_camera" placeholder="Front 50MP + 2MP Back 5MP"><br>
 Display: <input id="a_display"><br>
 Processor: <input id="a_processor"><br>
-Extra: <textarea id="a_extra"></textarea><br>
+Body: <input id="a_body" placeholder="Glass front, plastic back"><br>
+Color: <input id="a_color" placeholder="Black, Blue, White"><br>
+OS: <input id="a_os" placeholder="Android 14"><br>
+Extra (Full Description): <textarea id="a_extra"></textarea><br>
 Affiliate: <input id="a_aff"><br><br>
-<button onclick="savePhone()" style="background:green;color:#fff;width:100%;font-size:18px">SAVE</button><br><br><button onclick="logout()" style="background:red;color:#fff;width:100%">Logout</button>
-<div id="plist" style="margin-top:20px"><h3>Live Phones</h3><div id="listInner">Loading...</div></div></div>
+<button onclick="savePhone()" style="background:green;color:#fff;width:100%">SAVE</button><br><br><button onclick="logout()" style="background:red;color:#fff;width:100%">Logout</button>
+<div id="plist" style="margin-top:20px"><h3>Live Phones</h3><div id="listInner"></div></div></div>
 <script>
 const NPOINT='https://api.npoint.io/cd45816ccf83cda565d1';let allPhones=[],editId=null;const _k="MDg5MDg5";
-function togglePass(){let p=document.getElementById('pass');p.type=p.type=='password'?'text':'password';}
-function login(){let v=document.getElementById('pass').value.trim();let real=atob(_k);if(v===real){localStorage.setItem('admin','yes');document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';load();}else{document.getElementById('err').innerText='Wrong Password';}}
+function login(){let v=document.getElementById('pass').value.trim();if(v===atob(_k)){localStorage.setItem('admin','yes');document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';load();}else{document.getElementById('err').innerText='Wrong';}}
 function logout(){localStorage.removeItem('admin');location.reload();}
 function getV(o,k){for(let x of k){if(o[x]!==undefined&&o[x]!==null&&String(o[x]).trim()!=='') return o[x];}return '';}
-async function load(){
-  try{let r=await fetch(NPOINT);if(r.ok){let d=await r.json();if(Array.isArray(d)) allPhones=d;}}catch(e){}
-  if(allPhones.length==0) allPhones=JSON.parse(localStorage.getItem('phones')||'[]');
-  allPhones.sort((a,b)=> b.id - a.id);
-  document.getElementById('listInner').innerHTML=allPhones.map(p=>`<div style="border:1px solid #ddd;padding:8px;margin:5px;display:flex;justify-content:space-between"><span><b>${p.name}</b> - TK ${p.price}</span><span><button onclick="editP(${p.id})">Edit</button> <button onclick="delP(${p.id})" style="color:red">Del</button></span></div>`).join('')||'No phones';
-}
-async function saveAll(){
-  document.getElementById('listInner').innerHTML='Saving...';
-  try{await fetch(NPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(allPhones)});}catch(e){}
-  localStorage.setItem('phones',JSON.stringify(allPhones));
-  alert('Saved!');
-  load();
-}
+async function load(){try{let r=await fetch(NPOINT);let d=await r.json();if(Array.isArray(d)) allPhones=d;}catch(e){}allPhones.sort((a,b)=>b.id-a.id);document.getElementById('listInner').innerHTML=allPhones.map(p=>`<div style="border:1px solid #ddd;padding:8px;margin:5px;display:flex;justify-content:space-between"><span><b>${p.name}</b> - TK ${p.price}</span><span><button onclick="editP(${p.id})">Edit</button> <button onclick="delP(${p.id})" style="color:red">Del</button></span></div>`).join('');}
+async function saveAll(){document.getElementById('listInner').innerHTML='Saving...';try{await fetch(NPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(allPhones)});}catch(e){}alert('Saved!');load();}
 function delP(id){if(!confirm('Delete?')) return;allPhones=allPhones.filter(x=>x.id!=id);saveAll();}
-function editP(id){
-  let p=allPhones.find(x=>x.id==id);if(!p) return;editId=id;
-  a_name.value=getV(p,['name'])||'';a_image.value=getV(p,['image','img'])||'';a_price.value=getV(p,['price','a_price'])||'';a_brand.value=getV(p,['brand'])||'';a_rating.value=getV(p,['rating'])||'';a_status.value=getV(p,['status'])||'Available';a_ram.value=getV(p,['ram'])||'';a_rom.value=getV(p,['rom'])||'';a_battery.value=getV(p,['battery'])||'';a_camera.value=getV(p,['camera','cam'])||'';a_display.value=getV(p,['display'])||'';a_processor.value=getV(p,['processor','chipset','cpu'])||'';a_extra.value=getV(p,['full_text','extra'])||'';a_aff.value=getV(p,['affiliate','link'])||'';window.scrollTo(0,0);
-}
-function savePhone(){
-  if(!a_name.value||!a_price.value){alert('Name & Price lagbe');return;}
-  let data={id:editId||Date.now(),name:a_name.value.trim(),image:a_image.value.trim(),img:a_image.value.trim(),price:parseInt(a_price.value)||0,a_price:parseInt(a_price.value)||0,brand:a_brand.value.trim().toLowerCase()||'other',rating:a_rating.value||'8',status:a_status.value,ram:a_ram.value,rom:a_rom.value,battery:a_battery.value,camera:a_camera.value,display:a_display.value,processor:a_processor.value,full_text:a_extra.value,extra:a_extra.value,affiliate:a_aff.value,link:a_aff.value};
-  if(editId){let i=allPhones.findIndex(x=>x.id==editId);if(i>=0) allPhones[i]=data;editId=null;}else allPhones.unshift(data);
-  saveAll();a_name.value='';a_price.value='';
-}
+function editP(id){let p=allPhones.find(x=>x.id==id);if(!p) return;editId=id;a_name.value=getV(p,['name'])||'';a_image.value=getV(p,['image','img'])||'';a_price.value=getV(p,['price','a_price'])||'';a_brand.value=getV(p,['brand'])||'';a_rating.value=getV(p,['rating'])||'';a_status.value=getV(p,['status'])||'Available';a_ram.value=getV(p,['ram'])||'';a_rom.value=getV(p,['rom'])||'';a_battery.value=getV(p,['battery'])||'';a_camera.value=getV(p,['camera','cam'])||'';a_display.value=getV(p,['display'])||'';a_processor.value=getV(p,['processor'])||'';a_body.value=getV(p,['body'])||'';a_color.value=getV(p,['color'])||'';a_os.value=getV(p,['os'])||'';a_extra.value=getV(p,['full_text','extra'])||'';a_aff.value=getV(p,['affiliate','link'])||'';window.scrollTo(0,0);}
+function savePhone(){if(!a_name.value||!a_price.value){alert('Name & Price');return;}let data={id:editId||Date.now(),name:a_name.value.trim(),image:a_image.value.trim(),img:a_image.value.trim(),price:parseInt(a_price.value)||0,a_price:parseInt(a_price.value)||0,brand:a_brand.value.trim().toLowerCase()||'other',rating:a_rating.value||'8',status:a_status.value,ram:a_ram.value,rom:a_rom.value,battery:a_battery.value,camera:a_camera.value,cam:a_camera.value,display:a_display.value,processor:a_processor.value,body:a_body.value,color:a_color.value,os:a_os.value,full_text:a_extra.value,extra:a_extra.value,affiliate:a_aff.value,link:a_aff.value};if(editId){let i=allPhones.findIndex(x=>x.id==editId);if(i>=0) allPhones[i]=data;editId=null;}else allPhones.unshift(data);saveAll();a_name.value='';a_price.value='';}
 window.onload=()=>{if(localStorage.getItem('admin')=='yes'){document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';load();}}
 </script></body></html>
