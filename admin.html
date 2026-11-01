@@ -1,23 +1,12 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Admin - Mobile BD</title><style>body{margin:0;font-family:Arial;background:#f2f4f8;padding:10px}.box{background:#fff;padding:15px;border-radius:12px;margin:10px auto;max-width:650px}input,select,textarea{width:95%;padding:10px;border:1px solid #ddd;border-radius:8px;margin:4px 0}button{padding:12px;border:0;border-radius:8px;font-weight:bold;cursor:pointer}</style></head><body>
 <div class="box" id="loginBox"><h2>Admin Login</h2><input id="pass" type="password" placeholder="Password" style="border:2px solid #0a84ff;text-align:center"><br><br><button onclick="login()" style="background:#0a84ff;color:#fff;width:100%">LOGIN</button><p id="err" style="color:red"></p></div>
-<div class="box" id="panel" style="display:none"><h2>✅ Admin Panel</h2>
-Name*: <input id="a_name"><br>
-Image URL*: <input id="a_image"><br>
-Price*: <input id="a_price" type="number"><br>
-Brand*: <input id="a_brand"><br>
-Rating: <input id="a_rating"><br>
-Status: <select id="a_status"><option>Available</option><option>Upcoming</option><option>In Stock</option><option>Unavailable</option></select><br>
-RAM: <input id="a_ram"><br>
-ROM: <input id="a_rom"><br>
-Battery: <input id="a_battery"><br>
-Camera*: <input id="a_camera" placeholder="Front 50MP + 2MP Back 5MP"><br>
-Display: <input id="a_display"><br>
-Processor: <input id="a_processor"><br>
-Body: <input id="a_body" placeholder="Glass front, plastic back"><br>
-Color: <input id="a_color" placeholder="Black, Blue, White"><br>
-OS: <input id="a_os" placeholder="Android 14"><br>
-Extra (Full Description): <textarea id="a_extra"></textarea><br>
-Affiliate: <input id="a_aff"><br><br>
+<div class="box" id="panel" style="display:none"><h2>✅ Admin Panel FINAL</h2>
+Name*: <input id="a_name"><br>Image URL*: <input id="a_image"><br>Price*: <input id="a_price" type="number"><br>Brand*: <input id="a_brand"><br>Rating: <input id="a_rating"><br>
+Status: <select id="a_status"><option>Official</option><option>Unofficial</option><option>Available</option><option>Upcoming</option></select><br>
+Network: <input id="a_network" placeholder="1G / 2G / 3G / 4G / 5G / 10G ja khusi"><br>
+RAM: <input id="a_ram"><br>ROM: <input id="a_rom"><br>Battery: <input id="a_battery" placeholder="5000mAh with 33W Fast Charging"><br>Weight: <input id="a_weight" placeholder="190g"><br>
+Camera*: <input id="a_camera"><br>Display: <input id="a_display"><br>Processor: <input id="a_processor"><br>Body: <input id="a_body"><br>Color: <input id="a_color"><br>OS: <input id="a_os"><br>Release Date: <input id="a_release" type="date"><br>
+Extra: <textarea id="a_extra"></textarea><br>Affiliate: <input id="a_aff"><br><br>
 <button onclick="savePhone()" style="background:green;color:#fff;width:100%">SAVE</button><br><br><button onclick="logout()" style="background:red;color:#fff;width:100%">Logout</button>
 <div id="plist" style="margin-top:20px"><h3>Live Phones</h3><div id="listInner"></div></div></div>
 <script>
@@ -25,10 +14,10 @@ const NPOINT='https://api.npoint.io/cd45816ccf83cda565d1';let allPhones=[],editI
 function login(){let v=document.getElementById('pass').value.trim();if(v===atob(_k)){localStorage.setItem('admin','yes');document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';load();}else{document.getElementById('err').innerText='Wrong';}}
 function logout(){localStorage.removeItem('admin');location.reload();}
 function getV(o,k){for(let x of k){if(o[x]!==undefined&&o[x]!==null&&String(o[x]).trim()!=='') return o[x];}return '';}
-async function load(){try{let r=await fetch(NPOINT);let d=await r.json();if(Array.isArray(d)) allPhones=d;}catch(e){}allPhones.sort((a,b)=>b.id-a.id);document.getElementById('listInner').innerHTML=allPhones.map(p=>`<div style="border:1px solid #ddd;padding:8px;margin:5px;display:flex;justify-content:space-between"><span><b>${p.name}</b> - TK ${p.price}</span><span><button onclick="editP(${p.id})">Edit</button> <button onclick="delP(${p.id})" style="color:red">Del</button></span></div>`).join('');}
+async function load(){try{let r=await fetch(NPOINT);let d=await r.json();if(Array.isArray(d)) allPhones=d;}catch(e){}allPhones.sort((a,b)=>b.id-a.id);document.getElementById('listInner').innerHTML=allPhones.map(p=>`<div style="border:1px solid #ddd;padding:8px;margin:5px;display:flex;justify-content:space-between"><span><b>${p.name}</b></span><span><button onclick="editP(${p.id})">Edit</button> <button onclick="delP(${p.id})" style="color:red">Del</button></span></div>`).join('');}
 async function saveAll(){document.getElementById('listInner').innerHTML='Saving...';try{await fetch(NPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(allPhones)});}catch(e){}alert('Saved!');load();}
 function delP(id){if(!confirm('Delete?')) return;allPhones=allPhones.filter(x=>x.id!=id);saveAll();}
-function editP(id){let p=allPhones.find(x=>x.id==id);if(!p) return;editId=id;a_name.value=getV(p,['name'])||'';a_image.value=getV(p,['image','img'])||'';a_price.value=getV(p,['price','a_price'])||'';a_brand.value=getV(p,['brand'])||'';a_rating.value=getV(p,['rating'])||'';a_status.value=getV(p,['status'])||'Available';a_ram.value=getV(p,['ram'])||'';a_rom.value=getV(p,['rom'])||'';a_battery.value=getV(p,['battery'])||'';a_camera.value=getV(p,['camera','cam'])||'';a_display.value=getV(p,['display'])||'';a_processor.value=getV(p,['processor'])||'';a_body.value=getV(p,['body'])||'';a_color.value=getV(p,['color'])||'';a_os.value=getV(p,['os'])||'';a_extra.value=getV(p,['full_text','extra'])||'';a_aff.value=getV(p,['affiliate','link'])||'';window.scrollTo(0,0);}
-function savePhone(){if(!a_name.value||!a_price.value){alert('Name & Price');return;}let data={id:editId||Date.now(),name:a_name.value.trim(),image:a_image.value.trim(),img:a_image.value.trim(),price:parseInt(a_price.value)||0,a_price:parseInt(a_price.value)||0,brand:a_brand.value.trim().toLowerCase()||'other',rating:a_rating.value||'8',status:a_status.value,ram:a_ram.value,rom:a_rom.value,battery:a_battery.value,camera:a_camera.value,cam:a_camera.value,display:a_display.value,processor:a_processor.value,body:a_body.value,color:a_color.value,os:a_os.value,full_text:a_extra.value,extra:a_extra.value,affiliate:a_aff.value,link:a_aff.value};if(editId){let i=allPhones.findIndex(x=>x.id==editId);if(i>=0) allPhones[i]=data;editId=null;}else allPhones.unshift(data);saveAll();a_name.value='';a_price.value='';}
+function editP(id){let p=allPhones.find(x=>x.id==id);if(!p) return;editId=id;a_name.value=getV(p,['name'])||'';a_image.value=getV(p,['image','img'])||'';a_price.value=getV(p,['price','a_price'])||'';a_brand.value=getV(p,['brand'])||'';a_rating.value=getV(p,['rating'])||'';a_status.value=getV(p,['status'])||'Official';a_network.value=getV(p,['network'])||'';a_ram.value=getV(p,['ram'])||'';a_rom.value=getV(p,['rom'])||'';a_battery.value=getV(p,['battery'])||'';a_weight.value=getV(p,['weight'])||'';a_camera.value=getV(p,['camera','cam'])||'';a_display.value=getV(p,['display'])||'';a_processor.value=getV(p,['processor'])||'';a_body.value=getV(p,['body'])||'';a_color.value=getV(p,['color'])||'';a_os.value=getV(p,['os'])||'';a_release.value=getV(p,['release','release_date'])||'';a_extra.value=getV(p,['full_text','extra'])||'';a_aff.value=getV(p,['affiliate','link'])||'';window.scrollTo(0,0);}
+function savePhone(){if(!a_name.value||!a_price.value){alert('Name & Price');return;}let data={id:editId||Date.now(),name:a_name.value.trim(),image:a_image.value.trim(),img:a_image.value.trim(),price:parseInt(a_price.value)||0,a_price:parseInt(a_price.value)||0,brand:a_brand.value.trim().toLowerCase()||'other',rating:a_rating.value||'8',status:a_status.value,network:a_network.value,ram:a_ram.value,rom:a_rom.value,battery:a_battery.value,weight:a_weight.value,camera:a_camera.value,cam:a_camera.value,display:a_display.value,processor:a_processor.value,body:a_body.value,color:a_color.value,os:a_os.value,release:a_release.value,release_date:a_release.value,full_text:a_extra.value,extra:a_extra.value,affiliate:a_aff.value,link:a_aff.value};if(editId){let i=allPhones.findIndex(x=>x.id==editId);if(i>=0) allPhones[i]=data;editId=null;}else allPhones.unshift(data);saveAll();a_name.value='';a_price.value='';}
 window.onload=()=>{if(localStorage.getItem('admin')=='yes'){document.getElementById('loginBox').style.display='none';document.getElementById('panel').style.display='block';load();}}
 </script></body></html>
