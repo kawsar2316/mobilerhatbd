@@ -1,1 +1,80 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title id="seoTitle">Mobile Price</title><meta id="seoDesc" name="description" content=""><link id="seoCan" rel="canonical" href=""><meta name="monetag" content="1f605b9843b5bdf9ea7714ba2fe90120"><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-gray-50"><header class="bg-white border-b sticky top-0"><div class="max-w-3xl mx-auto px-3 py-3 flex justify-between"><a href="/" class="font-extrabold text-blue-600">Mobile BD</a><a href="/" class="text-xs border px-3 py-1 rounded-full">Home</a></div></header><div class="max-w-3xl mx-auto px-3 py-4"><div id="box" class="bg-white rounded-2xl border p-4">Loading...</div></div><script>const NPOINT="https://api.npoint.io/cd45816ccf83cda565d1";function gv(o,k){for(let x of k){if(o[x]!==undefined&&o[x]!==null&&String(o[x]).trim()!=='') return o[x];}return '';}async function load(){let id=new URLSearchParams(location.search).get('id');if(!id){box.innerHTML='No ID';return;}try{let r=await fetch(NPOINT);let phones=await r.json();let p=phones.find(x=>String(x.id)==String(id));if(!p){box.innerHTML='Not found';return;}document.title=(p.name||'')+' Price in Bangladesh 2026 - TK '+(p.price||p.a_price||'');seoTitle.innerText=document.title;seoDesc.setAttribute('content',(p.name||'')+' price TK '+(p.price||'')+' RAM '+(gv(p,['ram'])||'')+' ROM '+(gv(p,['rom'])||'')+' Battery '+(gv(p,['battery'])||'')+' Full Specs in BD.');seoCan.setAttribute('href','https://mobilerhatbd.pages.dev/phone.html?id='+p.id);let display=gv(p,['display','Display']),processor=gv(p,['processor','Processor']),rear=gv(p,['rear_cam','rearCamera','Rear Camera','rear']),front=gv(p,['front_cam','frontCamera','Front Camera','front']),battery=gv(p,['battery','Battery']),os=gv(p,['os','OS']),body=gv(p,['body','Body']),color=gv(p,['color','Color']),status=gv(p,['status','Status']),network=gv(p,['network','Network']),official=gv(p,['official','Official']);box.innerHTML=`<img src="${gv(p,['image','img'])}" class="w-full h-72 object-contain bg-gray-50 rounded-xl"><h1 class="text-xl font-bold mt-4">${p.name}</h1><p class="text-blue-600 font-bold text-xl mt-1">TK ${p.price||p.a_price}</p><p class="text-xs text-gray-500 mt-1">${status} | ${official} | ${network}</p><div class="mt-4 grid grid-cols-2 gap-2 text-[13px]"><div class="border p-3 rounded-xl bg-gray-50"><b>RAM:</b> ${gv(p,['ram'])||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>ROM:</b> ${gv(p,['rom'])||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Display:</b> ${display||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Processor:</b> ${processor||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Rear Camera:</b> ${rear||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Front Camera:</b> ${front||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Battery:</b> ${battery||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>OS:</b> ${os||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Body:</b> ${body||'-'}</div><div class="border p-3 rounded-xl bg-gray-50"><b>Color:</b> ${color||'-'}</div></div><div class="mt-4 p-3 border rounded-xl"><b class="text-sm">Full Description:</b><p class="text-xs text-gray-600 mt-2 leading-6 whitespace-pre-wrap">${gv(p,['full_text','extra','details'])||'No extra info'}</p></div>${gv(p,['affiliate','link'])?`<a href="${(gv(p,['affiliate','link']).startsWith('http')?gv(p,['affiliate','link']):'https://'+gv(p,['affiliate','link']))}" target="_blank" class="block mt-4 bg-green-600 text-white text-center py-3 rounded-xl font-bold">Buy Now - Best Price</a>`:''}<a href="/" class="block mt-2 border text-center py-3 rounded-xl font-bold text-sm">← Back to All Mobiles</a>`;}catch(e){box.innerHTML='Error';}}load();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phone Details - Mobile BD</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>body{background:#f1f5f9}</style>
+</head>
+<body>
+<header class="bg-white sticky top-0 z-40 border-b"><div class="max-w-3xl mx-auto px-3 py-2.5 flex justify-between items-center"><a href="/" class="text-xl font-extrabold text-blue-600">Mobile BD</a><a href="/" class="text-xs bg-gray-100 px-3 py-1 rounded-full">Home</a></div></header>
+
+<div id="wrap" class="max-w-3xl mx-auto px-2 py-3">
+<div class="bg-white rounded-2xl border p-3 text-center">Loading...</div>
+</div>
+
+<script>
+const NPOINT="https://api.npoint.io/cd45816ccf83cda565d1";
+function getV(o,k){for(let x of k){if(o[x]!==undefined&&o[x]!==null&&String(o[x]).trim()!=='') return o[x];}return '';}
+function fixLink(l){if(!l) return '';l=l.trim();if(l.startsWith('http://')||l.startsWith('https://')) return l;return 'https://'+l;}
+
+async function load(){
+ let id=new URLSearchParams(location.search).get('id');
+ try{
+  let r=await fetch(NPOINT); let phones=await r.json();
+  let p=phones.find(x=>String(x.id)==String(id));
+  if(!p){document.getElementById('wrap').innerHTML='<div class="bg-white p-5 rounded-xl">Phone not found</div>';return;}
+
+  let name=getV(p,['name'])||'';
+  let price=getV(p,['price','a_price'])||'';
+  let img=getV(p,['image','img'])||'https://via.placeholder.com/300';
+  let ram=getV(p,['ram'])||'-';
+  let rom=getV(p,['rom'])||'-';
+  let display=getV(p,['display'])||'-';
+  let proc=getV(p,['processor','chipset','cpu'])||'-';
+  let battery=getV(p,['battery'])||'-';
+  let status=getV(p,['status'])||'Available';
+  let camera=getV(p,['camera','cam'])||'-';
+  let body=getV(p,['body'])||'-';
+  let color=getV(p,['color'])||'-';
+  let os=getV(p,['os','android'])||'-';
+  let extra=getV(p,['full_text','extra'])||'';
+  let buy=fixLink(getV(p,['affiliate','link']));
+
+  document.getElementById('wrap').innerHTML=`
+  <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+    <div class="p-4 flex justify-center bg-gray-50"><img src="${img}" class="w-full max-w-[280px] h-[280px] object-contain"></div>
+    <div class="p-4">
+      <h1 class="text-xl font-bold">${name}</h1>
+      <p class="text-blue-600 font-extrabold text-xl mt-1">TK ${price}</p>
+      <p class="text-gray-500 text-xs mt-1">${status} | ${getV(p,['brand'])||''}</p>
+      
+      <div class="grid grid-cols-2 gap-2 mt-4">
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">RAM:</b> <span class="text-sm">${ram}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">ROM:</b> <span class="text-sm">${rom}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Display:</b> <span class="text-sm">${display}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Processor:</b> <span class="text-sm">${proc}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3 col-span-2"><b class="text-sm">Camera:</b> <span class="text-sm">${camera}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Rear Camera:</b> <span class="text-sm">${camera}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Front Camera:</b> <span class="text-sm">${camera}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Battery:</b> <span class="text-sm">${battery}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">OS:</b> <span class="text-sm">${os}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Body:</b> <span class="text-sm">${body}</span></div>
+        <div class="bg-gray-50 border rounded-xl p-3"><b class="text-sm">Color:</b> <span class="text-sm">${color}</span></div>
+      </div>
+
+      <div class="mt-4 bg-white border rounded-xl p-3">
+        <b class="text-sm">Full Description:</b>
+        <p class="text-sm text-gray-600 mt-1 whitespace-pre-wrap">${extra||'-'}</p>
+      </div>
+
+      ${buy?`<a href="${buy}" target="_blank" class="block mt-4 bg-green-600 text-white text-center py-3 rounded-xl font-bold">Buy Now - Best Price</a>`:''}
+      <a href="/" class="block mt-2 border text-center py-3 rounded-xl font-bold">← Back to All Mobiles</a>
+    </div>
+  </div>`;
+ }catch(e){document.getElementById('wrap').innerHTML='Error loading';}
+}
+load();
+</script>
+</body>
+</html>
