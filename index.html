@@ -1,1 +1,109 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"> <title>All Mobile Price in Bangladesh 2026 - Smartphone Price in BD</title> <meta name="description" content="All Mobile Price in Bangladesh 2026 - Samsung, Xiaomi, iPhone, Realme, Vivo official price in Bangladesh with full specs."> <link rel="canonical" href="https://mobilerhatbd.pages.dev/"><meta name="monetag" content="1f605b9843b5bdf9ea7714ba2fe90120"><meta name="google-site-verification" content="uVI0uZyzfS0HH98SuaXHnFuNuUePIZL5_nFHKzBGOtQ"> <script src="https://cdn.tailwindcss.com"></script> <style>body{background:#f1f5f9} .no-scrollbar::-webkit-scrollbar{display:none}</style> <script src="https://5gvci.com/act/files/tag.min.js?z=12159846" data-cfasync="false" async></script> </head> <body> <header class="bg-white sticky top-0 z-40 border-b"><div class="max-w-6xl mx-auto px-3 py-2.5 flex justify-between items-center"><h1 class="text-xl font-extrabold text-blue-600">Mobile BD</h1><a href="/" class="text-xs text-gray-600">Home</a></div></header> <div class="max-w-6xl mx-auto px-2 pt-3"><div class="bg-white rounded-xl border p-4"><h2 class="font-bold text-sm">Mobile Phone Price in Bangladesh 2026</h2><p class="text-xs text-gray-600 mt-2 leading-5">Welcome to Mobile BD - best place to find all mobile phone prices in Bangladesh. Samsung, Xiaomi, iPhone, Realme, Vivo official and unofficial price, RAM, ROM, battery, camera details daily update.</p></div></div> <div class="max-w-6xl mx-auto px-2 py-3"><input id="search" oninput="render()" placeholder="Search mobile..." class="w-full border rounded-full px-4 py-2.5 outline-none bg-white text-sm shadow-sm"><div class="flex gap-2 mt-2.5 overflow-x-auto no-scrollbar pb-1"><button onclick="filterPrice('all',this)" class="pbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold">All</button><button onclick="filterPrice('10k',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">Under 10K</button><button onclick="filterPrice('10-20',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">10K-20K</button><button onclick="filterPrice('20-30',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">20K-30K</button><button onclick="filterPrice('30',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">30K+</button></div><div class="flex gap-2 mt-2 overflow-x-auto no-scrollbar pb-1" id="brandBox"></div></div> <div class="max-w-6xl mx-auto px-2 pb-1"><div class="text-center py-1"><div style="display:flex;justify-content:center;line-height:0"><script>atOptions={'key':'6d8437a829260faa8d5d0f85e525b361','format':'iframe','height':50,'width':320,'params':{}};</script><script src="https://bauval.org/22/6d8437a829260faa8d5d0f85e525b361"></script></div></div></div> <div id="grid" class="max-w-6xl mx-auto px-2 py-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div> <script> const NPOINT_URL="https://api.npoint.io/cd45816ccf83cda565d1";let phones=[],curP='all',curB='all'; function fixLink(l){if(!l) return '';l=l.trim();if(l.startsWith('http://')||l.startsWith('https://')) return l;return 'https://'+l;} function getVal(o,k){for(let key of k){if(o[key]!==undefined && o[key]!==null && String(o[key]).trim()!=='') return o[key];}return '';} async function loadPhones(){try{let r=await fetch(NPOINT_URL);let d=await r.json();if(Array.isArray(d)) phones=d;else if(d.data) phones=d.data;else phones=[];phones.sort((a,b)=> (b.id||0) - (a.id||0));render();}catch(e){}} function filterPrice(v,el){curP=v;document.querySelectorAll('.pbtn').forEach(b=>b.className='pbtn bg-white border px-4 py-1.5 rounded-full text-xs');el.className='pbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold';render();} function filterBrand(v,el){curB=v;document.querySelectorAll('.bbtn').forEach(b=>b.className='bbtn bg-white border px-4 py-1.5 rounded-full text-xs');el.className='bbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold';render();} function render(){ let q=document.getElementById('search').value.toLowerCase(); let list=phones.filter(p=>{let price=parseInt(getVal(p,['price','a_price'])||0)||0;let okP=curP=='all'||(curP=='10k'&&price<10000)||(curP=='10-20'&&price>=10000&&price<=20000)||(curP=='20-30'&&price>20000&&price<=30000)||(curP=='30'&&price>30000);let okB=curB=='all'||(p.brand&&p.brand.toLowerCase()==curB.toLowerCase());let okQ=!q||(p.name+p.brand).toLowerCase().includes(q);return okP&&okB&&okQ;}); let brands=[...new Set(phones.map(p=>(p.brand||'').toLowerCase()).filter(b=>b))]; document.getElementById('brandBox').innerHTML='<button onclick="filterBrand(\'all\',this)" class="bbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold">All Brand</button>'+brands.map(b=>'<button onclick="filterBrand(\''+b+'\',this)" class="bbtn bg-white border px-4 py-1.5 rounded-full text-xs">'+b+'</button>').join(''); let html='';list.forEach((p,idx)=>{let i=phones.indexOf(p);let buyLink=fixLink(getVal(p,['affiliate','link']));let hasBuy=buyLink.length>5;let img=getVal(p,['image','img']);let ram=getVal(p,['ram']);let rom=getVal(p,['rom']);let price=getVal(p,['price','a_price']);let status=getVal(p,['status'])||'In Stock';let rating=getVal(p,['rating'])||'4.5'; html+=`<div class="bg-white rounded-2xl border shadow-sm overflow-hidden flex flex-col"><div class="flex justify-between items-center px-2.5 pt-2.5"><span class="text-[9px] font-bold px-2 py-1 rounded-full bg-green-50 text-green-700 border">${status}</span><span class="text-[9px] font-bold px-2 py-1 rounded-full bg-orange-50 text-orange-600 border">★ ${rating}</span></div><div class="p-3 flex justify-center"><img src="${img}" onerror="this.src='https://via.placeholder.com/300'" class="w-full h-[135px] object-contain"></div><div class="px-3 pb-3 text-center mt-auto"><h3 class="font-bold text-[13px] truncate">${p.name||''}</h3><p class="text-blue-600 font-extrabold text-[14px] mt-1">TK ${price}</p><p class="text-gray-400 text-[10px]">${ram} ${ram&&rom?'•':''} ${rom}</p><div class="flex gap-1.5 mt-2.5"><a href="/phone.html?id=${p.id}" class="flex-1 border py-1.5 rounded-full text-[11px] font-semibold text-center">Details</a>${hasBuy?`<a href="${buyLink}" target="_blank" class="flex-1 bg-green-600 text-white py-1.5 rounded-full text-[11px] font-bold text-center">Buy</a>`:''}</div></div></div>`; if((idx+1)%10==0){html+=`<div class="col-span-2 md:col-span-3 lg:col-span-4 text-center py-2"><script>atOptions={'key':'6d8437a829260faa8d5d0f85e525b361','format':'iframe','height':250,'width':300,'params':{}};<\/script><script src="https://bauval.org/22/6d8437a829260faa8d5d0f85e525b361"><\/script></div>`;} });document.getElementById('grid').innerHTML=html;}loadPhones(); </script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>All Mobile Price in Bangladesh 2026 - Low Price, Budget Friendly Phone Price BD</title>
+<meta name="description" content="Mobile phone price in Bangladesh 2026 - Low price, budget friendly, kom dame valo phone. Samsung, Xiaomi, iPhone, Symphony, Walton official price. Compare specs & buy online with Cash on Delivery & Discount.">
+<meta name="keywords" content="mobile price in bangladesh, low price phone bd, budget friendly phone, kom dame valo phone, sosta phone bd, official mobile price bd, samsung price bd, xiaomi price bd, iphone price bd, symphony mobile price, walton mobile price, cash on delivery mobile bd">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mobilerhatbd.pages.dev/">
+<meta property="og:title" content="All Mobile Price in Bangladesh 2026 - Low Price Phone BD">
+<meta property="og:description" content="Find low price, budget friendly mobile prices in Bangladesh. Buy online with Cash on Delivery & Discount.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mobilerhatbd.pages.dev/">
+<meta name="monetag" content="1f605b9843b5bdf9ea7714ba2fe90120">
+<meta name="google-site-verification" content="uVI0uZyzfS0HH98SuaXHnFuNuUePIZL5_nFHKzBGOtQ">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>body{background:#f1f5f9} .no-scrollbar::-webkit-scrollbar{display:none}</style>
+<script src="https://5gvci.com/act/files/tag.min.js?z=12159846" data-cfasync="false" async></script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"Mobile BD",
+  "url":"https://mobilerhatbd.pages.dev/",
+  "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://mobilerhatbd.pages.dev/?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Mobile BD","url":"https://mobilerhatbd.pages.dev","description":"Mobile phone price comparison and online shop in Bangladesh - Low price, budget friendly phone, Cash on Delivery & Discount"}
+</script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {"@type":"Question","name":"Low price phone in Bangladesh?","acceptedAnswer":{"@type":"Answer","text":"Mobile BD te 5000 TK theke low price, budget friendly phone paben. Cash on Delivery available."}},
+    {"@type":"Question","name":"Kom dame valo phone konta?","acceptedAnswer":{"@type":"Answer","text":"Samsung, Xiaomi, Symphony, Walton er kom dame valo phone amader site e paben official price e."}},
+    {"@type":"Question","name":"Can I buy phone online with Cash on Delivery?","acceptedAnswer":{"@type":"Answer","text":"Yes, you can buy any mobile online from Mobile BD with Cash on Delivery and Discount all over Bangladesh."}}
+  ]
+}
+</script>
+</head>
+<body>
+<header class="bg-white sticky top-0 z-40 border-b"><div class="max-w-6xl mx-auto px-3 py-2.5 flex justify-between items-center"><h1 class="text-xl font-extrabold text-blue-600">Mobile BD</h1><a href="/" class="text-xs text-gray-600">Home</a></div></header>
+
+<div class="max-w-6xl mx-auto px-2 pt-3"><div class="bg-white rounded-xl border p-4"><h2 class="font-bold text-sm">Mobile Phone Price in Bangladesh 2026 - Low Price & Budget Friendly</h2><p class="text-xs text-gray-600 mt-2 leading-5">Mobile phone price in Bangladesh 2026 - Compare official prices, full specs, low price & budget friendly phones. Samsung, Xiaomi, iPhone, Symphony, Walton. Buy online with Cash on Delivery & Discount in BD.</p></div></div>
+
+<div class="max-w-6xl mx-auto px-2 py-3"><input id="search" oninput="render()" placeholder="Search low price phone, Samsung, iPhone, Symphony..." class="w-full border rounded-full px-4 py-2.5 outline-none bg-white text-sm shadow-sm"><div class="flex gap-2 mt-2.5 overflow-x-auto no-scrollbar pb-1"><button onclick="filterPrice('all',this)" class="pbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold">All</button><button onclick="filterPrice('10k',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">Under 10K</button><button onclick="filterPrice('10-20',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">10K-20K</button><button onclick="filterPrice('20-30',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">20K-30K</button><button onclick="filterPrice('30',this)" class="pbtn bg-white border px-4 py-1.5 rounded-full text-xs">30K+</button></div><div class="flex gap-2 mt-2 overflow-x-auto no-scrollbar pb-1" id="brandBox"></div></div>
+
+<div id="grid" class="max-w-6xl mx-auto px-2 py-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
+
+<footer class="max-w-6xl mx-auto px-3 py-6 mt-4">
+<div class="bg-white rounded-xl border p-4">
+<h3 class="font-bold text-xs">Popular Mobile Searches in Bangladesh</h3>
+<p class="text-[11px] text-gray-500 mt-2 leading-5">
+low price phone in bangladesh, budget friendly phone bd, kom dame valo phone, sosta mobile price bd, kom takay valo phone, 5000 takar phone, 10000 takar phone, 15000 takar moddhe valo phone, samsung mobile price in bd, xiaomi mobile price in bangladesh, iphone price in bd, symphony mobile price bd, walton mobile price, realme price bd, vivo price bd, oppo price bd, official mobile price bd, unofficial mobile price bd, cash on delivery mobile bd, online mobile shop bd discount.
+</p>
+</div>
+<p class="text-center text-[10px] text-gray-400 mt-3">© 2026 Mobile BD - All Mobile Price in Bangladesh</p>
+</footer>
+
+<script>
+const NPOINT_URL="https://api.npoint.io/cd45816ccf83cda565d1";let phones=[],curP='all',curB='all';
+function fixLink(l){if(!l) return '';l=l.trim();if(l.startsWith('http://')||l.startsWith('https://')) return l;return 'https://'+l;}
+function getVal(o,k){for(let key of k){if(o[key]!==undefined && o[key]!==null && String(o[key]).trim()!=='') return o[key];}return '';}
+async function loadPhones(){try{let r=await fetch(NPOINT_URL);let d=await r.json();if(Array.isArray(d)) phones=d;else if(d.data) phones=d.data;else phones=[];phones.sort((a,b)=> (b.id||0) - (a.id||0));render();}catch(e){}}
+function filterPrice(v,el){curP=v;document.querySelectorAll('.pbtn').forEach(b=>b.className='pbtn bg-white border px-4 py-1.5 rounded-full text-xs');el.className='pbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold';render();}
+function filterBrand(v,el){curB=v;document.querySelectorAll('.bbtn').forEach(b=>b.className='bbtn bg-white border px-4 py-1.5 rounded-full text-xs');el.className='bbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold';render();}
+function render(){
+let rawQ=document.getElementById('search').value.toLowerCase();
+let cleanQ=rawQ.replace(/price|in bd|bangladesh|mobile|phone|dam|takar|moddhe|valo|price in bd/g,'').trim();
+let isLow = rawQ.includes('low') || rawQ.includes('cheap') || rawQ.includes('budget') || rawQ.includes('sosta') || rawQ.includes('kom dame') || rawQ.includes('kom takay');
+let q=cleanQ;
+
+let list=phones.filter(p=>{
+  let price=parseInt(getVal(p,['price','a_price'])||0)||0;
+  let okP=curP=='all'||(curP=='10k'&&price<10000)||(curP=='10-20'&&price>=10000&&price<=20000)||(curP=='20-30'&&price>20000&&price<=30000)||(curP=='30'&&price>30000);
+  if(isLow && curP=='all'){ okP = price < 15000; }
+  let okB=curB=='all'||(p.brand&&p.brand.toLowerCase()==curB.toLowerCase());
+  let fullText = (p.name+' '+p.brand).toLowerCase();
+  let okQ=!q || fullText.includes(q) || rawQ.split(' ').some(w=> w.length>2 && fullText.includes(w));
+  return okP&&okB&&okQ;
+});
+
+let brands=[...new Set(phones.map(p=>(p.brand||'').toLowerCase()).filter(b=>b))];
+document.getElementById('brandBox').innerHTML='<button onclick="filterBrand(\'all\',this)" class="bbtn bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold">All Brand</button>'+brands.map(b=>'<button onclick="filterBrand(\''+b+'\',this)" class="bbtn bg-white border px-4 py-1.5 rounded-full text-xs">'+b+'</button>').join('');
+let html='';let adCount=0;
+list.forEach((p,idx)=>{
+let buyLink=fixLink(getVal(p,['affiliate','link']));let hasBuy=buyLink.length>5;let img=getVal(p,['image','img']);let ram=getVal(p,['ram']);let rom=getVal(p,['rom']);let price=getVal(p,['price','a_price']);let status=getVal(p,['status'])||'In Stock';let rating=getVal(p,['rating'])||'4.5';
+html+=`<div class="bg-white rounded-2xl border shadow-sm overflow-hidden flex flex-col"><div class="flex justify-between items-center px-2.5 pt-2.5"><span class="text-[9px] font-bold px-2 py-1 rounded-full bg-green-50 text-green-700 border">${status}</span><span class="text-[9px] font-bold px-2 py-1 rounded-full bg-orange-50 text-orange-600 border">★ ${rating}</span></div><div class="p-3 flex justify-center"><img loading="lazy" src="${img}" onerror="this.src='https://via.placeholder.com/300'" class="w-full h-[135px] object-contain"></div><div class="px-3 pb-3 text-center mt-auto"><h3 class="font-bold text-[13px] truncate">${p.name||''}</h3><p class="text-blue-600 font-extrabold text-[14px] mt-1">TK ${price}</p><p class="text-gray-400 text-[10px]">${ram} ${ram&&rom?'•':''} ${rom}</p><div class="flex gap-1.5 mt-2.5"><a href="/phone.html?id=${p.id}" class="flex-1 border py-1.5 rounded-full text-[11px] font-semibold text-center">Details</a>${hasBuy?`<a href="${buyLink}" target="_blank" class="flex-1 bg-green-600 text-white py-1.5 rounded-full text-[11px] font-bold text-center">Buy</a>`:''}</div></div></div>`;
+if((idx+1)%6==0){adCount++; html+=`<div id="ad-${adCount}" class="col-span-2 md:col-span-3 lg:col-span-4 bg-white border rounded-xl flex justify-center items-center py-2 min-h-[280px]"></div>`;}
+});
+document.getElementById('grid').innerHTML=html;
+for(let i=1;i<=adCount;i++){
+  let el=document.getElementById('ad-'+i);
+  if(el){
+    let s1=document.createElement('script'); s1.innerHTML=`atOptions={'key':'6d8437a829260faa8d5d0f85e525b361','format':'iframe','height':250,'width':300,'params':{}};`;
+    let s2=document.createElement('script'); s2.src='https://bauval.org/22/6d8437a829260faa8d5d0f85e525b361';
+    el.appendChild(s1); el.appendChild(s2);
+  }
+}
+}
+loadPhones();
+</script>
+</body></html>
